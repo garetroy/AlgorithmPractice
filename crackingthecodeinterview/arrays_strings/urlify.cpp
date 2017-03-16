@@ -18,4 +18,6 @@ main(int argc, char *argv[])
         }
 
     std::cout << input << std::endl;
+
+    return 0;
 }
