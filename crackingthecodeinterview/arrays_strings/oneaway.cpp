@@ -30,13 +30,14 @@ main(int argc, char *argv[])
     }
 
     for(int i = 0; i < smallstr; i++){
-        if(firststring[i] == secondstr[i])
+        if(firststring[i] == secondstr[i]){
             difference++; 
-
-        if(difference > 1){
-            cout << firststring << "," << secondstr << " -> " << "false" << endl;  
-            return 0; 
+            if(difference > 1){
+                cout << firststring << "," << secondstr << " -> " << "false" << endl;  
+                return 0; 
+            }
         }
+
 
     }
 
