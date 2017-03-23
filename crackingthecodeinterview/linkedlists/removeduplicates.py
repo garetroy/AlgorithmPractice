@@ -12,7 +12,7 @@ class node:
         return False
 
     def __str__(self):
-        return str(self.data) 
+        return ("Node data: " + str(self.data))
 
 class linked_list:
     def __init__(self):
@@ -34,7 +34,7 @@ class linked_list:
         node = self.curr_node
         data = ""
         while node != None:
-            data += str(node.prev) + "\n"
+            data += str(node) + "\n"
             node = node.next 
         return data
     
@@ -42,22 +42,18 @@ class linked_list:
         same_items = []
         curr_node  = self.curr_node;
         next_node  = self.curr_node
-        while next_node.data != None:
+        while next_node != None:
             if next_node.data in same_items:
                 curr_node           = next_node
                 next_node           = curr_node.next
-                next_node.prev      = current_node.prev
+                next_node.prev      = curr_node.prev
                 curr_node.prev.next = next_node
                 curr_node.next      = None
-                curr_none.data      = None
+                curr_node.data      = None
                 continue
             else:
-                print(curr_node)
-                print(next_node)
-                input()
-                same_items.append(curr_node.data)
-                next_node           = curr_node.next
-                next_node.next.next = None
+                same_items.append(next_node.data)
+                next_node           = next_node.next
     
 def main():
 
@@ -73,7 +69,8 @@ def main():
     ll.add_node(9)
     ll.add_node(10)
     ll.add_node(11)
-    
+
+    print(ll) 
     ll.remove_doubles()
     print(ll)
 
