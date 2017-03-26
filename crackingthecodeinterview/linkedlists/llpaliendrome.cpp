@@ -1,5 +1,6 @@
 /*
     This program takes a single-linked-list of chars and checks to see if there is a palindrome
+    (In any permutation of the chars)
 */
 #include <iostream>
 #include <forward_list>
