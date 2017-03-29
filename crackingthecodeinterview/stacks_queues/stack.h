@@ -17,20 +17,26 @@ struct Node{ //By default public
         return (next == in.next) && (value == in.data);
     } 
 
+    inline bool operator!=(const Node& in) const
+    {
+        return (next != in.next) || (value != in.data);
+
+    }
+
     friend ostream &operator<<(ostream &os, const Node& n)
     {
-        return os << n.data;
+        return os << n.value;
     }
 };
 
 template <class T> class Stack;
 template <class T>
-ostream& operator<<(ostream& out, Stack<T>& in);
+ostream& operator<<(ostream& out, const Stack<T>& in);
 
 template <class T>
 class Stack{
     
-    private://Classes default private
+    protected://Classes default private
         Node<T> *head;
         int      size;
 
@@ -50,15 +56,26 @@ class Stack{
 
                    Node<T>* popHead(bool out=false);
                    void     readHead(ostream &os);
-                   int      pushNode(Node<T> &in);
+                   int      pushNode(Node<T> *in);
                    void     pushType(T in);
             inline bool     operator==(const Stack<T>& in) const;
             
-            friend ostream &operator<<(ostream &os, Stack<T>& in);
-                    
+            friend ostream &operator<<(ostream &os, const Stack<T>& in)
+            {
+                Node<T> *node = in.head;
+                while(node != NULL){
+                    os << *node << " ";
+                    node = node->next;
+                }
+
+                return os;
+            }
 }; 
-typedef Stack<int>  Stacki;
-typedef Stack<char> Stackc;
+typedef Stack<int>    Stacki;
+typedef Stack<float>  Stackf;
+typedef Stack<double> Stackd;
+typedef Stack<char>   Stackc;
+typedef Stack<string> Stacks;
 
 template<typename T>
 Node<T>*
@@ -68,7 +85,7 @@ Stack<T>::popHead(bool out)
             head    = popped->next;
     
     if(out)
-        cout << "Popped value is: " << head->value << endl; 
+        cout << "Popped value is: " << popped->value << endl; 
     
     size--;
 
@@ -85,15 +102,15 @@ Stack<T>::readHead(ostream &os)
 //Pushes a node onto the stack Returns 0 if failure; 1 on success
 template<typename T>
 int
-Stack<T>::pushNode(Node<T> &in)
+Stack<T>::pushNode(Node<T> *in)
 {
-    in.next = head;
-    head    = &in; 
+    in->next = head;
+    head     = in; 
 
     if(in == NULL)
         return 0; 
 
-    if(*head != in)
+    if(head != in)
         return 0;
 
     size++;
@@ -139,20 +156,4 @@ inline bool Stack<T>::operator==(const Stack<T>& in) const
 
     return true;
 } 
-
-template <typename T>
-ostream &
-operator<<(ostream &os, const Stack<T>& in)
-{
-    Node<T> *node = in.popHead();
-    in.pushNode(in);
-    while(node != NULL){
-        os << node << " ";
-        node = node->next;
-    }
-
-    return os;
-
-}
-
 #endif
