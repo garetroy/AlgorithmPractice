@@ -2,7 +2,7 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
-#include <iostream>
+#include <iostream> 
 #include <string>
 
 using namespace std;
@@ -74,7 +74,6 @@ Stack<T>::popHead(bool out)
 
     return popped;
 }
-
 //Prints the head of the stack into the given ostream
 template<typename T>
 void 
@@ -142,9 +141,8 @@ inline bool Stack<T>::operator==(const Stack<T>& in) const
 } 
 
 template <typename T>
-ostream 
-&operator<<(ostream &os, const Stack<T>& in)
-
+ostream &
+operator<<(ostream &os, const Stack<T>& in)
 {
     Node<T> *node = in.popHead();
     in.pushNode(in);
