@@ -55,7 +55,7 @@ class Stack{
             }
 
                    Node<T>* popHead(bool out=false);
-                   void     readHead(ostream &os);
+                   Node<T>* readHead();
                    int      pushNode(Node<T> *in);
                    void     pushType(T in);
             inline bool     operator==(const Stack<T>& in) const;
@@ -81,6 +81,9 @@ template<typename T>
 Node<T>*
 Stack<T>::popHead(bool out)
 {
+    if(head == NULL)
+        return NULL;
+
     Node<T> *popped = head;
             head    = popped->next;
     
@@ -93,10 +96,10 @@ Stack<T>::popHead(bool out)
 }
 //Prints the head of the stack into the given ostream
 template<typename T>
-void 
-Stack<T>::readHead(ostream &os)
+Node<T>*
+Stack<T>::readHead()
 {
-    os << "Head is: " << head->value << endl;
+    return head;
 }
 
 //Pushes a node onto the stack Returns 0 if failure; 1 on success
