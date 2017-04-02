@@ -57,6 +57,7 @@ class Stack{
                    Node<T>* popHead(bool out=false);
                    Node<T>* readHead();
                    int      pushNode(Node<T> *in);
+                   int      getSize();
                    void     pushType(T in);
             inline bool     operator==(const Stack<T>& in) const;
             
@@ -119,6 +120,13 @@ Stack<T>::pushNode(Node<T> *in)
     size++;
 
     return 1;
+}
+
+template<typename T>
+int
+Stack<T>::getSize()
+{
+    return size;
 }
 
 template<typename T>
