@@ -1,3 +1,6 @@
+/*
+   This program takes in a string and checks to see if there is any permutation of the string in which there exists a palidrome
+*/
 #import <iostream>
 #import <string>
 #import <algorithm>

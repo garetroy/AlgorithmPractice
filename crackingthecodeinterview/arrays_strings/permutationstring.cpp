@@ -1,3 +1,6 @@
+/*
+    This algorithms takes in two strings and compares the strings to see if the strings are permutations of eachother
+*/
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -12,8 +15,8 @@ main(int argc, char *argv[])
     
     std::string word1 = argv[1];
     std::string word2 = argv[2];
-    std::sort(word1.begin(), word1.end());
-    std::sort(word2.begin(), word2.end());
+    std::sort(word1.begin(), word1.end());//O(n)
+    std::sort(word2.begin(), word2.end());//O(m)
     
     if(word1 == word2){
         std::cerr << "These two are permuatations of eachother" << std::endl;

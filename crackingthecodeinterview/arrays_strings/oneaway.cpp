@@ -1,3 +1,6 @@
+/*
+    This program takes two strings and tries to see if there is only one difference between the two
+*/
 #include <iostream>
 #include <string>
 #include <algorithm>

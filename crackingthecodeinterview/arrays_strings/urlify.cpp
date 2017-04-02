@@ -1,3 +1,6 @@
+/*
+    This takes a string and makes it a "url"
+*/
 #import <string>
 #import <algorithm>
 #import <iostream>

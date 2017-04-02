@@ -1,3 +1,6 @@
+/*
+    This program takes in a string and checks to see if the string only contains unique characters
+*/
 #import <string>
 #import <iostream>
 
