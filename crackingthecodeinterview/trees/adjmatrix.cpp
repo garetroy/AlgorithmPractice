@@ -1,3 +1,6 @@
+/*
+    Implements an adjacency matrix (also a vauge adjacency list), designed by Garett Roberts
+*/
 #include <iostream>
 #include <vector>
 
@@ -29,7 +32,7 @@ struct AdjMatrix{
 
     AdjMatrix(void) : adjmatrix() {}
     AdjMatrix(int n) : adjmatrix(n, vector<Edge>(n)) {}
-    AdjMatrix(int n, int m) : adjmatrix(n, vector<Edge>(m)) {} 
+    AdjMatrix(int n, int m) : adjmatrix(n, vector<Edge>(m)) {} //allows for n by m matrices
 
     Edge* accessAt(int n, int m){ return &adjmatrix.at(n).at(m); } 
     
@@ -39,7 +42,7 @@ struct AdjMatrix{
             os << "Empty matrix" << endl;
             return os;
         }
-
+        //might want to modify if just want to see if exists/ want to have vertex defined rows/cols
         for(int i = 0; i < in.adjmatrix.size(); i++){
             for(int j = 0; j < in.adjmatrix.size(); j++)
                 os << in.adjmatrix.at(i).at(j).weight << " ";
@@ -54,7 +57,8 @@ int
 main()
 {
     int n = 3;
-    AdjMatrix matrix(3); 
+    AdjMatrix matrix(3);  // n by n matrix
+    //Initialize
     for(int i = 0; i < n; i++)
         for(int j = 0; j < n; j++){
             matrix.accessAt(i,j)->weight = i+j;
