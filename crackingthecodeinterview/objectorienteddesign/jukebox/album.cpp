@@ -25,13 +25,13 @@ Album::setGenre(string in)
 }
 
 void
-Album::addSong(Song& song)
+Album::addSong(Song* song)
 {
     songs.push_back(song);
 }   
 
 void
-Album::addSongAt(Song& song, int in)
+Album::addSongAt(Song* song, int in)
 {
     if(in >= songs.size()){
         cerr << "Cannot song at place " << in << " because albumsize is " << songs.size() << endl;
@@ -56,13 +56,19 @@ Album::getGenre(void)
 Song*
 Album::getSongAt(int in)
 {
-    return &songs.at(in);
+    return songs.at(in);
 }
 
 ostream & operator<<(ostream &os, Album& in)
 {
-    for( auto &i : in.songs)
-        os << i.getTitle();
+    int count = 1;
+
+    os << in.albumTitle << ": ";
+
+    for( auto &i : in.songs){
+        os << count << "." << i->getTitle() << " ";
+        count++;
+    }
     
     return os;
 }

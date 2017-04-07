@@ -9,7 +9,7 @@ class Album{
         
         string       albumTitle;
         string       genre;
-        vector<Song> songs; 
+        vector<Song*> songs; 
         
         
     public:
@@ -20,8 +20,8 @@ class Album{
 
         void   setAlbumTitle(string);
         void   setGenre(string);
-        void   addSong(Song&); 
-        void   addSongAt(Song&,int);
+        void   addSong(Song*); 
+        void   addSongAt(Song*,int);
         string getAlbumTitle(void);
         string getGenre(void);
         Song*  getSongAt(int);

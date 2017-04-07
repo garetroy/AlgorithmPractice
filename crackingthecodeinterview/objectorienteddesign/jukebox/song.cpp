@@ -51,7 +51,8 @@ Song::Song(string in, double _length, int pos, char* binarydata)
 
 Song::~Song(void)
 {
-    delete [] binaryData;
+    if(binaryData != NULL)
+        delete[] binaryData;
 }
 
 void
