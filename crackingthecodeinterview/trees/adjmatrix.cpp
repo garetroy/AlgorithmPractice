@@ -4,7 +4,12 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
+using std::ostream;
+using std::vector;
+using std::cout;
+using std::cerr;
+using std::cin;
+using std::endl;
 
 struct Vertex{
     char           color;
