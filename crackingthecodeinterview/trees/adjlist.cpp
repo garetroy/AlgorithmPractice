@@ -12,17 +12,19 @@ using std::endl;
 struct Vertex{
     char            vertexchar;
     char            color;
+    int             firsttime;
+    int             lasttime;
     int             distance;
     Vertex*         predessesor; 
     vector<Vertex*> verticies;
 
-    Vertex(void) : vertexchar('a'), color('w'), distance(-1), predessesor(NULL) {}
-    Vertex(char vertchar) : vertexchar(vertchar), color('w'), distance(-1), predessesor(NULL) {}
-    Vertex(char vertchar, int distance) : vertexchar(vertchar), color('w'), distance(distance), predessesor(NULL) {}
+    Vertex(void) : vertexchar('a'), color('w'), distance(-1), firsttime(1), lasttime(1), predessesor(NULL) {}
+    Vertex(char vertchar) : vertexchar(vertchar), color('w'), distance(-1), firsttime(1), lasttime(1), predessesor(NULL) {}
+    Vertex(char vertchar, int distance) : vertexchar(vertchar), color('w'), distance(distance), firsttime(1), lasttime(1), predessesor(NULL) {}
 
     friend ostream &operator<<(ostream& os, const Vertex& in)
     {
-        os << in.vertexchar << "-" << in.color << "-" << in.predessesor << " ";
+        os << in.vertexchar << "-" << in.color << "-" << in.firsttime << "-" << in.lasttime << " ";
         return os;
     }
 };
@@ -67,7 +69,35 @@ BFS(Vertex* v)
         v->color = 'b';
     }
 } 
-            
+
+void
+DFSVisit(Adjlist& in, Vertex* v, int& time)
+{
+    time++;
+    v->firsttime = time;
+    v->color     = 'g';
+    for( Vertex *k : v->verticies ){
+        if(k->color == 'w'){
+            k->predessesor = v;
+            DFSVisit(in,k,time);
+
+        }
+    }
+    v->color = 'b';
+    time++;
+    v->lasttime = time;
+}
+
+int 
+DFS(Adjlist& in)
+{
+    int time = 0;
+    for( Vertex* k : in.list){
+        if(k->color == 'w')
+            DFSVisit(in, k, time);
+    }
+    return time; 
+}
 
 int
 main()
@@ -80,6 +110,22 @@ main()
     Vertex* e = new Vertex('e');
     Vertex* f = new Vertex('f');
     Vertex* g = new Vertex('g');
+
+    //for DFS
+    temp.list.push_back(a);
+    temp.list[0]->verticies.push_back(c);
+    temp.list[0]->verticies.push_back(d);
+    temp.list.push_back(b);
+    temp.list[1]->verticies.push_back(a);
+    temp.list[1]->verticies.push_back(d);
+    temp.list.push_back(c);
+    temp.list[2]->verticies.push_back(e);
+    temp.list.emplace_back(d);
+    temp.list[3]->verticies.push_back(c);
+    temp.list[3]->verticies.push_back(e);
+    temp.list.push_back(e);
+
+    /* for BFS
     temp.list.push_back(a);
     temp.list[0]->verticies.push_back(b);
     temp.list.push_back(b);
@@ -96,18 +142,20 @@ main()
     temp.list.push_back(f);
     temp.list.push_back(g);
     temp.list[6]->verticies.emplace_back(d); 
+    */
 
-    Vertex* to   = a;
-    Vertex* from = d; 
+    //Vertex* to   = a;
+    Vertex* from = e; 
     bool    swch  = false;
 
-    BFS(from);
+    DFS(temp);
+    //BFS(from);
 
-    while(to != NULL){
-        if(from == to)
-            swch = true;
-        to = to->predessesor;
+    while(from != NULL){
+        cout << *from << endl;
+        from = from->predessesor;
     }
-    cout <<  swch << endl;
+    //cout <<  swch << endl;
+    //cout << temp << endl;
     return 0;
 }
