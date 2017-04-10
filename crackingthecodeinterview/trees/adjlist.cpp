@@ -89,8 +89,8 @@ main()
     temp.list[2]->verticies.push_back(d);
     temp.list[2]->verticies.push_back(e);
     temp.list.emplace_back(d);
-    temp.list[3]->verticies.push_back(e);
     temp.list[3]->verticies.push_back(a);
+    temp.list[3]->verticies.push_back(e);
     temp.list.push_back(e);
     temp.list[4]->verticies.push_back(f);
     temp.list.push_back(f);
@@ -98,14 +98,15 @@ main()
     temp.list[6]->verticies.emplace_back(d); 
 
     Vertex* to   = a;
-    Vertex* from = f;
+    Vertex* from = d; 
     bool    swch  = false;
-    BFS(to);
 
-    while(from != NULL){
+    BFS(from);
+
+    while(to != NULL){
         if(from == to)
             swch = true;
-        from = from->predessesor;
+        to = to->predessesor;
     }
     cout <<  swch << endl;
     return 0;
