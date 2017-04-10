@@ -66,7 +66,7 @@ BFS(Vertex* v)
             }
         v->color = 'b';
     }
-}        
+} 
             
 
 int
@@ -98,12 +98,12 @@ main()
     temp.list[6]->verticies.emplace_back(d); 
 
     Vertex* to   = a;
-    Vertex* from = g;
+    Vertex* from = f;
     bool    swch  = false;
     BFS(to);
 
     while(from != NULL){
-        if(from == a)
+        if(from == to)
             swch = true;
         from = from->predessesor;
     }
