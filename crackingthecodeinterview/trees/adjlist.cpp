@@ -157,5 +157,14 @@ main()
     }
     //cout <<  swch << endl;
     //cout << temp << endl;
+
+    delete a; 
+    delete b;
+    delete c;
+    delete d;
+    delete e;
+    delete f;
+    delete g;
+
     return 0;
 }
