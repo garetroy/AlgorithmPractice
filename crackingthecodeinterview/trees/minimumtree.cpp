@@ -39,8 +39,10 @@ template <typename T>
 void
 MinTree<T>::Traverse(Node<T>* in, ostream& os)
 {
-    os << "->" << *in;
-    cerr << in->value << endl;
+    if(in == NULL)
+        return;
+
+    os << in->value << "->" ;
     Traverse(in->left,os);
     Traverse(in->right,os);
 }
@@ -50,7 +52,8 @@ main()
 {
     MinTree<int> tree;
     int array[6] = {3,4,5,6,7,8};
-    tree.BuildMinTree(array,0,5);
+
+    tree.root = tree.BuildMinTree(array,0,5);
     
     cout << tree << endl;
 
