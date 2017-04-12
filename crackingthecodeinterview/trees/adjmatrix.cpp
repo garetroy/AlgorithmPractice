@@ -34,10 +34,11 @@ struct Edge{
 
 struct AdjMatrix{
     vector<vector<Edge>> adjmatrix;
+    int                  numverticies;
 
     AdjMatrix(void) : adjmatrix() {}
-    AdjMatrix(int n) : adjmatrix(n, vector<Edge>(n)) {}
-    AdjMatrix(int n, int m) : adjmatrix(n, vector<Edge>(m)) {} //allows for n by m matrices
+    AdjMatrix(int n) : adjmatrix(n, vector<Edge>(n)), numverticies(n) {}
+    AdjMatrix(int n, int m) : adjmatrix(n, vector<Edge>(m)), numverticies(m*n)  {} //allows for n by m matrices
 
     Edge* accessAt(int n, int m){ return &adjmatrix.at(n).at(m); } 
     
@@ -57,6 +58,29 @@ struct AdjMatrix{
         return os;
     }
 };
+
+void
+Kruskals(AdjMatrix& a)
+{
+    int n        = a.numverticies;
+    int i        = 0;
+    int min      = 999;
+    int ne       = 1;
+    int min      = 0;
+    int minacost = 0;
+
+   while(ne < n){
+        for(i=1,min=999;i<=n;i++){
+            for(j=1;j<=n,j++){
+                if(cost[i][j] < min){
+                    min=cost[i][j];
+                    a=u=i;
+                    b=v=j;
+                }
+            }
+        }
+
+}
 
 int
 main()
