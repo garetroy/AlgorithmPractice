@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -14,7 +15,7 @@ recursive_find(unordered_set<string>&dictionary, unordered_map<string,bool>& mem
         return instring;      
 
     if(dictionary.find(instring) != dictionary.end())
-        return instring;
+        return "yes";
 
     //recurse here
     return "no";
@@ -27,19 +28,14 @@ main()
     unordered_map<string,bool> memo(900);
     ifstream myfile("diction10k.txt");
 
-    int    i(0);
-    string in("");
+    int           i(0);
+    string        in("");
 
     while(getline(myfile, in)){
+        istringstream iss(in);
+        iss >> in;
         dictionary.emplace(in);
     } 
-
-    for( auto k : dictionary){
-        i++;
-        cerr << k << endl; 
-        if(i == 2)
-            return 1;
-    }
 
     myfile.close();
     
