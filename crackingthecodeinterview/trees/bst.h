@@ -2,9 +2,13 @@
 #define _BST_H_
 
 #include <iostream>
+#include <cmath>
 
 #include "node.h"
 #include "linkedlist.h"
+
+using std::ostream;
+using std::abs;
 
 template <typename T>
 struct BST{
@@ -22,6 +26,8 @@ struct BST{
     void     Delete(Node<T>*);
     void     RemoveParent(Node<T>*);
     void     Traverse(Node<T>*,ostream&);
+    bool     Balanced(Node<T>*);
+
 
     friend ostream& operator<<(ostream& os, BST<T>& in)
     {
@@ -136,6 +142,9 @@ template <typename T>
 void
 BST<T>::RemoveParent(Node<T>* in)
 {
+    if(in->parent == nullptr)
+        return;
+    
     if(*in->parent->left == *in)
         in->parent->left = nullptr;
     
@@ -160,5 +169,24 @@ BST<T>::Traverse(Node<T>* in, ostream& os)
     os << "  " << *in << endl;
     Traverse(in->left,os);
     Traverse(in->right,os);
+}
+
+template <typename T>
+bool
+BST<T>::Balanced(Node<T>* in)
+{
+    if(in == nullptr)
+        return true;
+    
+    if(in->left == nullptr && in->right == nullptr)
+        return true;
+
+    if(in->left == nullptr || in->right == nullptr)
+        return false;
+
+    if(abs(in->left->depth - in->right->depth) <= 1 && this->Balanced(in->left) && this->Balanced(in->right))
+        return true;
+
+    return false;
 }
 #endif
