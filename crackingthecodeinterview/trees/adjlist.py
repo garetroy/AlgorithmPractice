@@ -45,6 +45,32 @@ def BFS(v):
                 inqueue.append(i)
         v.color = 'b'
 
+global time
+def DFSVisit(adjlist, vertex):
+    global time 
+    time           += 1
+    vertex.firstime = time 
+    vertex.color    = 'g'
+    for v in vertex.adjvert:
+        if v.color == 'w':
+            v.prevVert = vertex
+            DFSVisit(adjlist,v)
+
+    vertex.color    = 'b'
+    time           += 1
+    vertex.lasttime = time
+
+def DFS(adjlist):
+
+    global time
+    time = 0
+    for v in adjlist.list:
+        if v.color == 'w':
+            DFSVisit(adjlist,v)
+
+    return time
+
+
 def main():
     temp = AdjList()
     
@@ -54,8 +80,9 @@ def main():
     d = Vertex('d')
     e = Vertex('e')
     f = Vertex('f')
-    g = Vertex('g')
+    #g = Vertex('g')
 
+    ''' FOR BFS TESTING
     temp.list.append(a);
     temp.list[0].adjvert.append(b);
     temp.list.append(b);
@@ -82,5 +109,27 @@ def main():
         vert = vert.prevVert
 
     print(vert)
+    '''
+    temp.list.append(a);
+    temp.list[0].adjvert.append(c);
+    temp.list[0].adjvert.append(d);
+    temp.list.append(b);
+    temp.list[1].adjvert.append(a);
+    temp.list[1].adjvert.append(d);
+    temp.list.append(c);
+    temp.list[2].adjvert.append(e);
+    temp.list.append(d);
+    temp.list[3].adjvert.append(c);
+    temp.list[3].adjvert.append(e);
+    temp.list.append(e);
+    
+    DFS(temp)
+
+    tempv = e
+    while tempv != None:
+        print(str(tempv) + " -> ", end = "")
+        tempv = tempv.prevVert
+    
+    print() 
 
 main()
