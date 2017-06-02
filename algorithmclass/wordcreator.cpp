@@ -1,6 +1,5 @@
-#include <unordered_set>
-#include <unordered_map>
 #include <algorithm>
+#include <unordered_set>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -24,7 +23,7 @@ get_string(bool memo, int *location, string instring)
     return outstring;
 }
 
-bool
+/*bool
 recursive_find(unordered_set<string>&dictionary, bool *memo, int *location, string instring, int i=0)
 {
     if(i == instring.size())
@@ -40,7 +39,7 @@ recursive_find(unordered_set<string>&dictionary, bool *memo, int *location, stri
             location[i] = j;
         }
     return memo[i];
-}
+}*/
 
 string
 iterative_find(unordered_set<string>&dictionary, string instring)
@@ -100,13 +99,13 @@ main()
         cout << "iterative attempt:" << endl;
         cout << iterative_find(dictionary,phrases[i]) << endl; 
         cout << "memoized attempt:" << endl;
-        int  location[phrases[i].size()+1];
-        bool memo[phrases[i].size()+1];
-        initialize_array(memo,location,phrases[i].size()+1);
-        found = recursive_find(dictionary,memo,location,phrases[i]);
-        for(int i = 0; i < phrases[i].size();i++)
-            cout << location[i];
-        cout << get_string(found,location,phrases[i]) << endl << endl;
+//        int  location[phrases[i].size()+1];
+//        bool memo[phrases[i].size()+1];
+//        initialize_array(memo,location,phrases[i].size()+1);
+//        found = recursive_find(dictionary,memo,location,phrases[i]);
+//        for(int i = 0; i < phrases[i].size();i++)
+//            cout << location[i];
+//        cout << get_string(found,location,phrases[i]) << endl << endl;
         
     }
 
