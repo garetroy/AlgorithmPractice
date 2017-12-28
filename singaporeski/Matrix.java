@@ -23,6 +23,30 @@ public class Matrix
         matrix = new int[rows][cols]; 
     }
 
+    public Matrix(int r, int c, int v)
+    {
+        /*
+            Initilizes a r by c matrix with the value v
+        */
+
+        if(r <= 0 || c <= 0)
+        {
+            System.out.println("Dimentions of matrix must be greater than 0");
+            System.exit(0);
+        }
+        rows   = r;
+        cols   = c;
+        matrix = new int[rows][cols];
+
+        for(int i = 0; i < rows-1; i++)
+        {
+            for(int k = 0; k < cols-1; k++)
+            {
+                matrix[i][k] = v;
+            }
+        }
+    }
+
     public String toString()
     {
         /*
