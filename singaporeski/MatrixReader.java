@@ -67,7 +67,7 @@ public class MatrixReader
             Returns null if unsuccessful (or no new line)
         */
 
-        if (curr < n)
+        if (curr < n+1)
         {
             try {
                 splits = s.nextLine().split(" ");
@@ -79,6 +79,7 @@ public class MatrixReader
                 return null;
             }
         } else {
+            System.out.println("Past number of rows for matrix");
             return null;
         }
 

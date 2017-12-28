@@ -1,12 +1,14 @@
 public class Main 
 {
+    public static boolean DEBUG = false;
+
     public static void main(String[] args)
     {
         /*
             This main function starts the reader, checks if it's n by n
             then loads the matrix and runs findLongest
         */
-        Reader r = new Reader();
+        MatrixReader r = new MatrixReader();
         if(r.n != r.m)
         {
             System.out.println("Has to have equal dimentions");
@@ -14,6 +16,7 @@ public class Main
         }
         Matrix m = new Matrix(r.n,r.m);
         loadMatrix(r,m);
+        System.out.println(m);
         int result = findLongest(m);
         System.out.println("Longest path was " + result);
     }
@@ -26,7 +29,7 @@ public class Main
         */
         int[] newarray = new int[in.length];
 
-        for(int i = 0; i < in.length-1; i++)
+        for(int i = 0; i < in.length; i++)
         {
             try{
                 newarray[i] = Integer.valueOf(in[i]);
@@ -39,7 +42,7 @@ public class Main
         return newarray;
     }
                 
-    public static void loadMatrix(Reader r, Matrix m)
+    public static void loadMatrix(MatrixReader r, Matrix m)
     {
         /*
             This loads the input of the reader into
@@ -51,25 +54,26 @@ public class Main
         String[] temp;
         int[]    inttemp;
 
-        for(int i = 0; i < r.n-1; i++)
+        for(int i = 0; i < r.n; i++)
         {
             if((temp = r.nextLine()) == null)
             {
-                System.out.println("Could not load matrix");
+                System.out.println("Could not load matrix, nextLine");
                 System.exit(0);
             }
             
             if((inttemp = toIntArr(temp)) == null)
             {
-                System.out.println("Could not load matrix");
+                System.out.println("Could not load matrix, toIntArr");
                 System.exit(0);
             }
 
             if((m.replaceRow(i,inttemp)) == -1)
             {
-                System.out.println("Could not load matrix");
+                System.out.println("Could not load matrix, replaceRow");
                 System.exit(0);
             }
+
         }
     }
 
@@ -91,13 +95,24 @@ public class Main
             {
                 if(cmatrix.matrix[i][j] == -1)
                 {
-                    checkFromVertex(i,j,m,cmatrix); 
+                    if(DEBUG)
+                    {
+                        System.out.println();
+                    }
+                    
+                    result = Math.max(result,checkFromVertex(i,j,m,cmatrix));
+                    if(DEBUG)
+                    {
+                        System.out.print("\nResult - ");
+                        System.out.print(result);
+                        System.out.println();
+                    }
                 }
 
-                result = Math.max(result,cmatrix.matrix[i][j]);
             }
         }
         
+        System.out.println(cmatrix);
         return result;
     }
 
@@ -109,6 +124,11 @@ public class Main
             it checks is smaller than the current element (downwards slope)
         */
 
+        if(DEBUG)
+        {
+            System.out.printf("%d",m.matrix[i][j]);
+        }
+
         if(i < 0 || i >= m.rows || j < 0 || j >= m.cols)
         {
             return 0;
@@ -118,27 +138,49 @@ public class Main
         {
             return cmatrix.matrix[i][j];
         }
+    
+        int max = 1;
 
         //First comparison is for bounds, the second is to see if there is a 
         //slope
         if(j < m.cols-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
         {
-            return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j+1,m,cmatrix);
-
-        }else if(j > 0 && (m.matrix[i][j] > m.matrix[i][j-1])){
-
-            return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j-1,m,cmatrix);
-
-        }else if(i > 0 && (m.matrix[i][j] > m.matrix[i-1][j])){
-
-            return cmatrix.matrix[i][j] = 1 + checkFromVertex(i-1,j,m,cmatrix);
-
-        }else  if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i+1][j])){
-            
-            return cmatrix.matrix[i][j] = 1 + checkFromVertex(i+1,j,m,cmatrix);
-
+            if(DEBUG)
+            {
+                System.out.printf("-(1,%d,%d)>",i,j);
+            }
+            max = Math.max(max,1 + checkFromVertex(i,j+1,m,cmatrix));
+        }
+        if(j > 0 && (m.matrix[i][j] > m.matrix[i][j-1]))
+        {
+            if(DEBUG)
+            {
+                System.out.printf("-(2,%d,%d)>",i,j);
+            }
+            max = Math.max(max,1 + checkFromVertex(i,j-1,m,cmatrix));
+        }
+        if(i > 0 && (m.matrix[i][j] > m.matrix[i-1][j]))
+        {
+            if(DEBUG)
+            {
+                System.out.printf("-(3,%d,%d)>",i,j);
+            }
+            max = Math.max(max,1 + checkFromVertex(i-1,j,m,cmatrix));
+        }
+        if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i+1][j]))
+        {
+            if(DEBUG)
+            {
+                System.out.printf("-(4,%d,%d)>",i,j);
+            }
+            max = Math.max(max,1 + checkFromVertex(i+1,j,m,cmatrix));
         }
         
-        return cmatrix.matrix[i][j] = 1;
+        if(DEBUG)
+        {
+            System.out.printf("(5,%d,%d)",i,j);
+        }
+        cmatrix.matrix[i][j] = max;
+        return max;
     }
 }
