@@ -91,7 +91,7 @@ public class Main
             return cmatrix.matrix[i][j];
         }
 
-        if(j < m.rows-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
+        if(j < m.rows && (m.matrix[i][j] > m.matrix[i][j+1]))
         {
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j+1,m,cmatrix);
 
@@ -99,11 +99,11 @@ public class Main
 
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j-1,m,cmatrix);
 
-        }else if(i > 0 && (m.matrix[i][j] > m.matrix[i][i-1])){
+        }else if(i > 0 && (m.matrix[i][j] > m.matrix[i-1][j])){
 
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i-1,j,m,cmatrix);
 
-        }else  if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i][i+1])){
+        }else  if(i < m.rows && (m.matrix[i][j] > m.matrix[i+1][j])){
             
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i+1,j,m,cmatrix);
         }
