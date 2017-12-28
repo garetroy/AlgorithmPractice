@@ -2,6 +2,10 @@ public class Main
 {
     public static void main(String[] args)
     {
+        /*
+            This main function starts the reader, checks if it's n by n
+            then loads the matrix and runs findLongest
+        */
         Reader r = new Reader();
         if(r.n != r.m)
         {
@@ -16,6 +20,10 @@ public class Main
 
     public static int[] toIntArr(String[] in)
     {
+        /*
+            Converts an array of strings to 
+            an array of ints
+        */
         int[] newarray = new int[in.length];
 
         for(int i = 0; i < in.length-1; i++)
@@ -33,6 +41,13 @@ public class Main
                 
     public static void loadMatrix(Reader r, Matrix m)
     {
+        /*
+            This loads the input of the reader into
+            a givem matrix m by getting next line of the
+            reader, then converting the line to an int array
+            and lastly, replacing the matrix m rows with
+            the newly converted int array
+        */
         String[] temp;
         int[]    inttemp;
 
@@ -60,12 +75,19 @@ public class Main
 
     public static int findLongest(Matrix m)
     {
+        /*
+            This creates a corresponding matrix with -1
+            and goes through every entry in the matrix
+            and checks possible maximum paths from it
+            using checkFromVertex function returning
+            the largest result
+        */
         Matrix cmatrix = new Matrix(m.rows,m.cols,-1);
         int    result  = 1;
         
-        for(int i = 0; i < m.rows-1; i++)
+        for(int i = 0; i < m.rows; i++)
         {
-            for(int j = 0; j < m.cols-1; j++)
+            for(int j = 0; j < m.cols; j++)
             {
                 if(cmatrix.matrix[i][j] == -1)
                 {
@@ -91,7 +113,9 @@ public class Main
             return cmatrix.matrix[i][j];
         }
 
-        if(j < m.rows && (m.matrix[i][j] > m.matrix[i][j+1]))
+        //First comparison is for bounds, the second is to see if there is a 
+        //slope
+        if(j < m.rows-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
         {
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j+1,m,cmatrix);
 
@@ -103,7 +127,7 @@ public class Main
 
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i-1,j,m,cmatrix);
 
-        }else  if(i < m.rows && (m.matrix[i][j] > m.matrix[i+1][j])){
+        }else  if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i+1][j])){
             
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i+1,j,m,cmatrix);
         }
