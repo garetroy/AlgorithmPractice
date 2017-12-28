@@ -1,5 +1,7 @@
 import java.util.Scanner;
+import java.io.File;
 import java.util.NoSuchElementException;
+import java.io.FileNotFoundException;
 
 
 public class MatrixReader
@@ -23,18 +25,20 @@ public class MatrixReader
     */
 
     Scanner  s; //scanner
+    File     r; //file
     int      n; //n dim of matrix (rows)
     int      m; //m dim of matrix (cols)
     int      curr; //current line
     String[] splits; //Splitting line
 
-    public MatrixReader()
+    public MatrixReader(String f)
     {
         /*
             Initilizes the scanner and dimintions
             Exits on error
         */
-        s      = new Scanner(System.in);
+        r      = new File(f);
+        s      = new Scanner(r);
         splits = (s.nextLine()).split(" ");
 
         if(splits.length != 2){

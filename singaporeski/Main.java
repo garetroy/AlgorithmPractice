@@ -8,7 +8,7 @@ public class Main
             This main function starts the reader, checks if it's n by n
             then loads the matrix and runs findLongest
         */
-        MatrixReader r = new MatrixReader();
+       // MatrixReader r = new MatrixReader(); <-Needs testing harness
         if(r.n != r.m)
         {
             System.out.println("Has to have equal dimentions");
@@ -16,9 +16,10 @@ public class Main
         }
         Matrix m = new Matrix(r.n,r.m);
         loadMatrix(r,m);
-        System.out.println(m);
-        int result = findLongest(m);
-        System.out.println("Longest path was " + result);
+        System.out.println("Done Loading Matrix");
+        int[] result = findLongest(m);
+        System.out.println("Longest path was " + result[0]);
+        System.out.println("With slope " + result[1]);
     }
 
     public static int[] toIntArr(String[] in)
@@ -58,7 +59,7 @@ public class Main
         {
             if((temp = r.nextLine()) == null)
             {
-                System.out.println("Could not load matrix, nextLine");
+                System.out.println("Could not load matrix, nextLine"); 
                 System.exit(0);
             }
             
@@ -77,7 +78,7 @@ public class Main
         }
     }
 
-    public static int findLongest(Matrix m)
+    public static int[] findLongest(Matrix m)
     {
         /*
             This creates a corresponding matrix with -1
@@ -87,7 +88,9 @@ public class Main
             the largest result
         */
         Matrix cmatrix = new Matrix(m.rows,m.cols,-1);
-        int    result  = 1;
+        int result     = 1;
+        int temp       = 0;
+        int slope      = 0;
         
         for(int i = 0; i < m.rows; i++)
         {
@@ -100,7 +103,17 @@ public class Main
                         System.out.println();
                     }
                     
-                    result = Math.max(result,checkFromVertex(i,j,m,cmatrix));
+                    bot = m.matrix[i][j];
+
+                    temp = checkFromVertex(i,j,m,cmatrix);
+                    if(result < temp)
+                    {
+                        result = temp;
+                        slope  = m.matrix[i][j]-bot;
+                    } else if(result == temp){
+                        slope = Math.max(slope,m.matrix[i][j]-bot);
+                    }
+                    
                     if(DEBUG)
                     {
                         System.out.print("\nResult - ");
@@ -108,13 +121,17 @@ public class Main
                         System.out.println();
                     }
                 }
-
             }
         }
-        
-        System.out.println(cmatrix);
-        return result;
+
+        int[] done = new int[2];
+        done[0] = result;
+        done[1] = slope;
+        return done;
     }
+
+    //For finding the bottom of the slope
+    public static int bot = 0;
 
     public static int checkFromVertex(int i, int j, Matrix m, Matrix cmatrix)
     {
@@ -122,64 +139,81 @@ public class Main
             This algorithm is recursive, it starts from i, j and checks
             left, right, up, and down. Making sure that the next element
             it checks is smaller than the current element (downwards slope)
+            
+            This rechecks paths, this is for the calculating the slope
         */
-
-        if(DEBUG)
-        {
-            System.out.printf("%d",m.matrix[i][j]);
-        }
 
         if(i < 0 || i >= m.rows || j < 0 || j >= m.cols)
         {
             return 0;
         }
 
-        if(cmatrix.matrix[i][j] != -1)
+        if(DEBUG)
         {
-            return cmatrix.matrix[i][j];
-        }
-    
+            System.out.printf("--%d--",m.matrix[i][j]);
+        } 
+
+
+        bot = Math.min(bot,m.matrix[i][j]);
+        
         int max = 1;
+        int temp = 0;
 
         //First comparison is for bounds, the second is to see if there is a 
         //slope
         if(j < m.cols-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
         {
-            if(DEBUG)
+            
+            temp = 1 + checkFromVertex(i,j+1,m,cmatrix);
+            if(max < temp)
             {
-                System.out.printf("-(1,%d,%d)>",i,j);
+                max = temp;
+                if(DEBUG)
+                {
+                    System.out.printf("--%d--",m.matrix[i][j]);
+                }
             }
-            max = Math.max(max,1 + checkFromVertex(i,j+1,m,cmatrix));
         }
+
         if(j > 0 && (m.matrix[i][j] > m.matrix[i][j-1]))
         {
-            if(DEBUG)
+            temp = 1 + checkFromVertex(i,j-1,m,cmatrix);
+            if(max < temp)
             {
-                System.out.printf("-(2,%d,%d)>",i,j);
+                max = temp;
+                if(DEBUG)
+                {
+                    System.out.printf("--%d--",m.matrix[i][j]);
+                }
             }
-            max = Math.max(max,1 + checkFromVertex(i,j-1,m,cmatrix));
         }
+
         if(i > 0 && (m.matrix[i][j] > m.matrix[i-1][j]))
         {
-            if(DEBUG)
+            temp = 1 + checkFromVertex(i-1,j,m,cmatrix);
+            if(max < temp)
             {
-                System.out.printf("-(3,%d,%d)>",i,j);
+                max = temp;
+                if(DEBUG)
+                {
+                    System.out.printf("--%d--",m.matrix[i][j]);
+                }
             }
-            max = Math.max(max,1 + checkFromVertex(i-1,j,m,cmatrix));
         }
+
         if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i+1][j]))
         {
-            if(DEBUG)
+            temp = 1 + checkFromVertex(i+1,j,m,cmatrix);
+            if(max < temp)
             {
-                System.out.printf("-(4,%d,%d)>",i,j);
+                max = temp;
+                if(DEBUG)
+                {
+                    System.out.printf("--%d--",m.matrix[i][j]);
+                }
             }
-            max = Math.max(max,1 + checkFromVertex(i+1,j,m,cmatrix));
         }
         
-        if(DEBUG)
-        {
-            System.out.printf("(5,%d,%d)",i,j);
-        }
         cmatrix.matrix[i][j] = max;
         return max;
     }
