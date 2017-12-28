@@ -9,7 +9,7 @@ public class Main
         Reader r = new Reader();
         if(r.n != r.m)
         {
-            System.out.println("Have to have equal dimentions");
+            System.out.println("Has to have equal dimentions");
             return;
         }
         Matrix m = new Matrix(r.n,r.m);
@@ -103,6 +103,12 @@ public class Main
 
     public static int checkFromVertex(int i, int j, Matrix m, Matrix cmatrix)
     {
+        /*
+            This algorithm is recursive, it starts from i, j and checks
+            left, right, up, and down. Making sure that the next element
+            it checks is smaller than the current element (downwards slope)
+        */
+
         if(i < 0 || i >= m.rows || j < 0 || j >= m.cols)
         {
             return 0;
@@ -115,7 +121,7 @@ public class Main
 
         //First comparison is for bounds, the second is to see if there is a 
         //slope
-        if(j < m.rows-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
+        if(j < m.cols-1 && (m.matrix[i][j] > m.matrix[i][j+1]))
         {
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i,j+1,m,cmatrix);
 
@@ -130,8 +136,9 @@ public class Main
         }else  if(i < m.rows-1 && (m.matrix[i][j] > m.matrix[i+1][j])){
             
             return cmatrix.matrix[i][j] = 1 + checkFromVertex(i+1,j,m,cmatrix);
+
         }
         
-        return cmatrix.matrix[i][j];
+        return cmatrix.matrix[i][j] = 1;
     }
 }
