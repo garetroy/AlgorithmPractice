@@ -38,9 +38,9 @@ public class Matrix
         cols   = c;
         matrix = new int[rows][cols];
 
-        for(int i = 0; i < rows-1; i++)
+        for(int i = 0; i < rows; i++)
         {
-            for(int k = 0; k < cols-1; k++)
+            for(int k = 0; k < cols; k++)
             {
                 matrix[i][k] = v;
             }
@@ -53,9 +53,9 @@ public class Matrix
             Converts the matrix to a string
         */
         String line = "\n";
-        for(int i = 0; i < rows-1; i++)
+        for(int i = 0; i < rows; i++)
         {
-            for(int k = 0; k < cols-1; k++)
+            for(int k = 0; k < cols; k++)
             {
                 line += Integer.toString(matrix[i][k]) + " ";
             }
@@ -90,7 +90,7 @@ public class Matrix
             return -1;
         }
 
-        for(int i = 0; i < cols-1; i++)
+        for(int i = 0; i < cols; i++)
         {
             matrix[row][i] = in[i];
         }
