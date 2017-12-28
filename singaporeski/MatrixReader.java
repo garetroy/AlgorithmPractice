@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.NoSuchElementException;
 
 
-public class Reader
+public class MatrixReader
 {
     /*
         A public class in which it parses System.in for a given matrix.
@@ -28,7 +28,7 @@ public class Reader
     int      curr; //current line
     String[] splits; //Splitting line
 
-    public Reader()
+    public MatrixReader()
     {
         /*
             Initilizes the scanner and dimintions
@@ -52,9 +52,7 @@ public class Reader
 
         if(n < 1 || m < 1)
         {
-            String line = "Cannot have dimintions less than one" +
-                          " and they must be equal";
-            System.out.println(line);
+            System.out.println("Cannot have dimintions less than one");
             System.exit(0);
         }
 
