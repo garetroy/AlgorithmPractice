@@ -37,8 +37,15 @@ public class MatrixReader
             Initilizes the scanner and dimintions
             Exits on error
         */
-        r      = new File(f);
-        s      = new Scanner(r);
+        r = new File(f);
+        try{
+            s = new Scanner(r);
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found... ");
+            System.out.println(e);
+            System.exit(0);
+        }
+
         splits = (s.nextLine()).split(" ");
 
         if(splits.length != 2){
